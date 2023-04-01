@@ -18,6 +18,8 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
     {
         try
         {
+            obj.DataCriada=DateTime.UtcNow;
+            obj.DataModificada= obj.DataCriada;
             await _context.Set<TEntity>().AddAsync(obj);
             await _context.SaveChangesAsync();
         }
@@ -73,6 +75,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
     {
         try
         {
+            obj.DataModificada=DateTime.UtcNow;
             _context.Entry(obj).State=EntityState.Modified;
             await _context.SaveChangesAsync();
         }
