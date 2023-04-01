@@ -11,4 +11,13 @@ public static class DummyData
         Nome="afsasfas",
         Descricao="adfsdfsadf"
     };
+
+    public static ClienteDTO ClienteInvalido = new ClienteDTO(){
+        Nome="asdfasd"
+    };
+    public static ClienteDTO ClienteValido = new ClienteDTO(){
+        Nome="asdfasd",
+        Site="safsdfsdaf",
+        SegmentoId=new Guid().ToString()
+    };
 }

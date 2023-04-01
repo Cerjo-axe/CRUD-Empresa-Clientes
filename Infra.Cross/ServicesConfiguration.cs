@@ -12,5 +12,6 @@ public static class ServicesConfiguration
     {
         services.AddScoped<ISegmentoRepository,SegmentoRepository>();
         services.AddScoped<ISegmentoService,SegmentoService>();
+        services.AddScoped<IClienteService,ClienteService>();
     }
 }

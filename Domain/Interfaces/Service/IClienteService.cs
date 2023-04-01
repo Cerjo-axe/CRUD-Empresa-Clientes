@@ -8,5 +8,5 @@ public interface IClienteService
     Task<IEnumerable<ClienteDTO>> GetClientes();
     Task<ClienteDTO> GetCliente(string id);
     Task UpdateCliente(ClienteDTO obj);
-    Task DeleteCLiente(ClienteDTO obj);
+    Task DeleteCliente(ClienteDTO obj);
 }
