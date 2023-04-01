@@ -19,7 +19,7 @@ public class ClientesController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ClienteDTO>> Obter([FromQuery] string id)
+    public async Task<ActionResult<ClienteDTO>> Obter(string id)
     {
         try
         {
@@ -68,7 +68,7 @@ public class ClientesController : ControllerBase
         try
         {
             _logger.LogInformation("Iniciando serviço de registro de Cliente");
-            cliente.Id = new Guid().ToString();
+            cliente.Id = Guid.NewGuid().ToString();
             await _service.AddCliente(cliente);
             _logger.LogInformation($"Sucesso na operação de registro do Cliente:{cliente.Nome}");
             return CreatedAtAction(nameof(Obter), new {id = cliente.Id},cliente);

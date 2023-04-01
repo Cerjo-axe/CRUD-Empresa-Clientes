@@ -24,7 +24,6 @@ public class ClienteService : IClienteService
     {
         try
         {
-            obj.Id = new Guid().ToString();
             new ClienteValidator().ValidateAndThrow(obj);
             Cliente cliente = _mapper.Map<Cliente>(obj);
             await _repository.Add(cliente);

@@ -68,7 +68,7 @@ public class SegmentosController : ControllerBase
         try
         {
             _logger.LogInformation("Iniciando serviço de registro de segmento");
-            segmento.Id = new Guid().ToString();
+            segmento.Id = Guid.NewGuid().ToString();
             await _service.AddSegment(segmento);
             _logger.LogInformation($"Sucesso na operação de registro do segmento:{segmento.Nome}");
             return CreatedAtAction(nameof(Obter), new {id = segmento.Id},segmento);
