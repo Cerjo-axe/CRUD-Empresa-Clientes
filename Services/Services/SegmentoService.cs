@@ -23,7 +23,6 @@ public class SegmentoService : ISegmentoService
     {
         try
         {
-            obj.Id = new Guid().ToString();
             new SegmentoValidator().ValidateAndThrow(obj);
             Segmento segmento = _mapper.Map<Segmento>(obj);
             await _repository.Add(segmento);

@@ -54,7 +54,9 @@ public class SegmentoServiceTests
             var mockRepo=GetRepositoryMock();
             var service = new SegmentoService(mockRepo.Object,_mapper);
             // When
-            Task add = service.AddSegment(DummyData.SegmentoValido);
+            var obj = DummyData.SegmentoValido;
+            obj.Id= new Guid().ToString();
+            Task add = service.AddSegment(obj);
             add.Wait();
             // Then
             Assert.Equal(TaskStatus.RanToCompletion,add.Status);
