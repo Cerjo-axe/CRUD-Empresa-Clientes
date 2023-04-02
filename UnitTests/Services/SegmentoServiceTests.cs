@@ -184,7 +184,7 @@ public class SegmentoServiceTests
             var service = new SegmentoService(mockRepo.Object,_mapper);
             // When
             DummyData.SegmentoValido.Id= new Guid().ToString();
-            var exception = await Record.ExceptionAsync(()=>service.DeleteSegment(DummyData.SegmentoValido));
+            var exception = await Record.ExceptionAsync(()=>service.DeleteSegment(DummyData.SegmentoValido.Id));
             // Then
             Assert.IsType<DbUpdateException>(exception);
         }
@@ -198,7 +198,7 @@ public class SegmentoServiceTests
             var service = new SegmentoService(mockRepo.Object,_mapper);
             // When
             DummyData.SegmentoValido.Id= new Guid().ToString();
-            Task add = service.DeleteSegment(DummyData.SegmentoValido);
+            Task add = service.DeleteSegment(DummyData.SegmentoValido.Id);
             add.Wait();
             // Then
             Assert.Equal(TaskStatus.RanToCompletion,add.Status);

@@ -182,7 +182,7 @@ public class ClienteServiceTests
             var service = new ClienteService(mockRepo.Object,_mapper);
             // When
             DummyData.ClienteValido.Id= new Guid().ToString();
-            var exception = await Record.ExceptionAsync(()=>service.DeleteCliente(DummyData.ClienteValido));
+            var exception = await Record.ExceptionAsync(()=>service.DeleteCliente(DummyData.ClienteValido.Id));
             // Then
             Assert.IsType<DbUpdateException>(exception);
         }
@@ -196,7 +196,7 @@ public class ClienteServiceTests
             var service = new ClienteService(mockRepo.Object,_mapper);
             // When
             DummyData.ClienteValido.Id= new Guid().ToString();
-            Task add = service.DeleteCliente(DummyData.ClienteValido);
+            Task add = service.DeleteCliente(DummyData.ClienteValido.Id);
             add.Wait();
             // Then
             Assert.Equal(TaskStatus.RanToCompletion,add.Status);
