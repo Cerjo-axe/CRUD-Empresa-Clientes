@@ -1,0 +1,55 @@
+@page "/AtualizarSegmento/{Id}"
+<h2 class="my-3">Atualizar Segmento</h2>
+
+<EditForm Model="@segmento" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <label for="Nome">Nome do Segmento:</label>
+    <InputText id="Nome" @bind-Value="segmento.Nome" />
+    <ValidationMessage For="@(()=>segmento.Nome)" />
+    <InputText id="Descricao" @bind-Value="segmento.Descricao" />
+    @if (MensagemErro is not null)
+    {
+        <h3>@MensagemErro</h3>
+    }
+    <button type="submit" class="btn btn-success">Atualizar</button>
+</EditForm>
+
+@code {
+    [Inject]
+    public ISegmentoService? service { get; set; }
+
+    [Inject]
+    public NavigationManager? NavManager { get; set; }
+    [Parameter]
+    public string Id { get; set; }
+    public SegmentoDTO? segmento { get; set; }
+    public string? MensagemErro { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            segmento = await service.GetSegmento(Id);
+        }
+        catch (System.Exception ex)
+        {
+
+            MensagemErro = ex.Message;
+        }
+    }
+
+    private async void HandleSubmit()
+    {
+        try
+        {
+            await service.UpdateSegmento(segmento);
+            NavManager.NavigateTo("/");
+
+        }
+        catch (System.Exception ex)
+        {
+
+            MensagemErro = ex.Message;
+        }
+    }
+}

@@ -1,0 +1,44 @@
+@page "/AdicionarSegmento"
+
+<h2 class="my-3">Adicionar Novo Segmento</h2>
+
+<EditForm Model="@segmento" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <label for="Nome">Nome do Segmento:</label>
+    <InputText id="Nome" @bind-Value="segmento.Nome" />
+    <ValidationMessage For="@(()=>segmento.Nome)" />
+    <InputText id="Descricao" @bind-Value="segmento.Descricao" />
+    @if (MensagemErro is not null)
+    {
+        <h3>@MensagemErro</h3>
+    }
+    <button type="submit" class="btn btn-success">Adicionar</button>
+</EditForm>
+
+@code {
+    [Inject]
+    public ISegmentoService? service { get; set; }
+
+    [Inject]
+    public NavigationManager? NavManager { get; set; }
+
+    private SegmentoDTO segmento = new SegmentoDTO();
+
+    public string? MensagemErro { get; set; }
+
+    private async void HandleSubmit()
+    {
+        try
+        {
+            segmento.Id = Guid.NewGuid().ToString();
+            await service.AddSegmento(segmento);
+            NavManager.NavigateTo("/");
+
+        }
+        catch (System.Exception ex)
+        {
+
+            MensagemErro = ex.Message;
+        }
+    }
+}

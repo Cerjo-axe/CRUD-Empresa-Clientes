@@ -1,0 +1,34 @@
+@page "/"
+@inject ISegmentoService service;
+<PageTitle>Segmentos</PageTitle>
+@if (Segmentos == null)
+{
+    <h3>Carregando Segmentos ...</h3>
+}
+else
+{
+    <div class="d-flex flex-row">
+    <h1>Segmentos</h1>
+    <a class="btn btn-primary" href="/AdicionarSegmento"><i class="fa-solid fa-plus"></i> Adicionar</a>
+</div>
+    <div class="row d-flex flex-row">
+        <h5 class="w-25 ">Nome</h5>
+        <h5 class="w-50 ">Descrição</h5>
+        <h5 class="w-25 ">Ações</h5>
+    </div>
+    @if (Segmentos.Count() > 0)
+    {
+        <ExibirSegmentos Segmentos="@Segmentos"></ExibirSegmentos>
+    }
+}
+
+@code {
+    public IEnumerable<SegmentoDTO>? Segmentos { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Segmentos = await service.GetSegmentos();
+    }
+}
+
+
