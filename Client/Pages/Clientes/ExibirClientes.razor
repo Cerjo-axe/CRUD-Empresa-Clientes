@@ -1,0 +1,32 @@
+<ul class="list-group">
+    @foreach (var item in Clientes)
+    {
+        <li class="list-group-item d-flex flex-row my-1 align-items-end">
+            <div class="w-25">
+                <h5 class="row "> @item.Nome</h5>
+                <h5 class="row">@item.Site</h5>
+            </div>
+            <div>
+                <a href="/Cliente/@item.Id"><i class="fa-regular fa-eye"></i></a>
+                <a href="/AtualizarCliente/@item.Id"><i class="fa-solid fa-pencil"></i></a>
+                <a href="" @onclick="() => OpenModal(item.Id)" @onclick:preventDefault><i class="fa-solid fa-trash"></i></a>
+            </div>
+        </li>
+    }
+</ul>
+<ModalDelete @ref="modal" Id="@deleteid" type="cliente"></ModalDelete>
+<button class="btn btn-primary" @onclick="() => modal.Open()">Modal!</button>
+
+@code {
+    [Parameter]
+    public IEnumerable<ClienteDTO>? Clientes { get; set; }
+
+    public string? deleteid { get; set; }
+    private ModalDelete modal { get; set; }
+
+    private void OpenModal(string selected)
+    {
+        deleteid = selected;
+        modal.Open();
+    }
+}

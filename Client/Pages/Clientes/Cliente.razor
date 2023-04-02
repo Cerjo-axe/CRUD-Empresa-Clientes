@@ -1,0 +1,52 @@
+@page "/Cliente/{Id}"
+@if (cliente is null && MensagemErro is null)
+{
+    <h3>Carregando</h3>
+}
+else if (MensagemErro is not null)
+{
+    <h1>@MensagemErro</h1>
+}
+else
+{
+    <div>
+    <h3>Nome</h3>
+    <h5>@cliente.Nome</h5>
+</div>
+    <div>
+    <h3>site</h3>
+    <h5>@cliente.Site</h5>
+</div>
+    <div>
+    <h3>segmento</h3>
+    <h5>@segmento.Nome</h5>
+</div>
+}
+
+@code {
+    [Inject]
+    public IClienteService? clienteservice { get; set; }
+    [Inject]
+    public ISegmentoService? segmentoservice { get; set; }
+
+    [Parameter]
+    public string Id { get; set; }
+
+    public SegmentoDTO segmento { get; set; }
+    public ClienteDTO? cliente { get; set; }
+    public string? MensagemErro { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            cliente = await clienteservice.GetCliente(Id);
+            segmento = await segmentoservice.GetSegmento(cliente.SegmentoId);
+        }
+        catch (System.Exception ex)
+        {
+
+            MensagemErro = ex.Message;
+        }
+    }
+}

@@ -29,8 +29,6 @@
 @code {
 
     [Inject]
-    public ISegmentoService? segmentoservice { get; set; }
-    [Inject]
     public IClienteService? clienteservice { get; set; }
 
     [Inject]
@@ -39,8 +37,6 @@
     [Parameter]
     public string? Id { get; set; }
 
-    [Parameter]
-    public string? type { get; set; }
     public string ModalDisplay = "none;";
     public string ModalClass = "";
     public bool ShowBackdrop = false;
@@ -65,16 +61,9 @@
     {
         try
         {
-            if (type == "segmento")
-            {
-                await segmentoservice.DeletarSegmento(Id);
-                NavManager.NavigateTo("/", forceLoad: true);
-            }
-            else
-            {
-                await clienteservice.DeletarCliente(Id);
-                NavManager.NavigateTo("/Clientes", forceLoad: true);
-            }
+            await clienteservice.DeletarCliente(Id);
+            NavManager.NavigateTo("/Clientes", forceLoad: true);
+
 
 
         }

@@ -1,0 +1,67 @@
+@page "/AdicionarCliente"
+
+<h2 class="my-3">Adicionar Novo Cliente</h2>
+
+<EditForm Model="@cliente" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <label for="Nome">Nome do cliente:</label>
+    <InputText id="Nome" @bind-Value="cliente.Nome" />
+    <ValidationMessage For="@(()=>cliente.Nome)" />
+
+    <label for="site">site do cliente:</label>
+    <InputText id="site" @bind-Value="cliente.Site" />
+    <ValidationMessage For="@(()=>cliente.Nome)" />
+
+    <label for="segmento">segmento do cliente:</label>
+    <InputSelect id="segmento" @bind-Value="cliente.SegmentoId">
+        <option value="">Selecione um segmento...</option>
+        @foreach (var item in Segmentos)
+        {
+            <option value="@item.Id">@item.Nome</option>
+        }
+    </InputSelect>
+    <ValidationMessage For="@(()=>cliente.Nome)" />
+    @if (MensagemErro is not null)
+    {
+        <h3>@MensagemErro</h3>
+    }
+    <button type="submit" class="btn btn-success">Adicionar</button>
+</EditForm>
+
+@code {
+    [Inject]
+    public ISegmentoService? segmentoservice { get; set; }
+
+    [Inject]
+    public IClienteService? clienteservice { get; set; }
+
+    [Inject]
+    public NavigationManager? NavManager { get; set; }
+
+    public IEnumerable<SegmentoDTO>? Segmentos { get; set; }
+
+    private ClienteDTO cliente = new ClienteDTO();
+
+    public string? MensagemErro { get; set; }
+
+    private async void HandleSubmit()
+    {
+        try
+        {
+            cliente.Id = Guid.NewGuid().ToString();
+            await clienteservice.AddCliente(cliente);
+            NavManager.NavigateTo("/Clientes");
+
+        }
+        catch (System.Exception ex)
+        {
+
+            MensagemErro = ex.Message;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Segmentos = await segmentoservice.GetSegmentos();
+    }
+}

@@ -5,28 +5,27 @@ using DTO;
 
 namespace Client.Services;
 
-public class SegmentoService : ISegmentoService
+public class ClienteService : IClienteService
 {
     private readonly HttpClient _httpClient;
-    private readonly ILogger<SegmentoService> _logger;
+    private readonly ILogger<ClienteService> _logger;
 
-    public SegmentoService(HttpClient httpClient, ILogger<SegmentoService> logger)
+    public ClienteService(HttpClient httpClient, ILogger<ClienteService> logger)
     {
         _httpClient = httpClient;
         _logger = logger;
     }
-
-    public async Task AddSegmento(SegmentoDTO obj)
+    public async Task AddCliente(ClienteDTO obj)
     {
         try
         {
-            var segmento = JsonSerializer.Serialize(obj);
-            StringContent content = new StringContent(segmento,Encoding.UTF8,"application/json");
-            var response = await _httpClient.PostAsync("api/Segmentos",content);
+            var cliente = JsonSerializer.Serialize(obj);
+            StringContent content = new StringContent(cliente,Encoding.UTF8,"application/json");
+            var response = await _httpClient.PostAsync("api/Clientes",content);
             if(!response.IsSuccessStatusCode)
             {
                 var message = await response.Content.ReadAsStringAsync();
-                _logger.LogError("Erro ao adicionar segmento");
+                _logger.LogError("Erro ao adicionar cliente");
                 throw new Exception($"status code:{response.StatusCode} - {message}");
             }
         }
@@ -35,16 +34,16 @@ public class SegmentoService : ISegmentoService
             throw;
         }
     }
-    public async Task UpdateSegmento(SegmentoDTO obj){
+
+    public async Task DeletarCliente(string id)
+    {
         try
         {
-            var segmento = JsonSerializer.Serialize(obj);
-            StringContent content = new StringContent(segmento,Encoding.UTF8,"application/json");
-            var response = await _httpClient.PutAsync("api/Segmentos",content);
+            var response = await _httpClient.DeleteAsync($"api/Clientes/{id}");
             if(!response.IsSuccessStatusCode)
             {
                 var message = await response.Content.ReadAsStringAsync();
-                _logger.LogError("Erro ao atualizar segmento");
+                _logger.LogError("Erro ao deletar cliente");
                 throw new Exception($"status code:{response.StatusCode} - {message}");
             }
         }
@@ -55,55 +54,57 @@ public class SegmentoService : ISegmentoService
         }
     }
 
-    public async Task<SegmentoDTO> GetSegmento(string id)
+    public async Task<ClienteDTO> GetCliente(string id)
     {
         try
         {
-            var response = await _httpClient.GetAsync($"api/Segmentos/{id}");
+            var response = await _httpClient.GetAsync($"api/Clientes/{id}");
             if(response.IsSuccessStatusCode)
             {
                 if(response.StatusCode==System.Net.HttpStatusCode.NoContent)
                 {
-                    return default(SegmentoDTO);
+                    return default(ClienteDTO);
                 }
-                return await response.Content.ReadFromJsonAsync<SegmentoDTO>();
+                return await response.Content.ReadFromJsonAsync<ClienteDTO>();
             }
             else{
                 var message = await response.Content.ReadAsStringAsync();
-                _logger.LogError($"Erro ao obter segmento de id {id}");
+                _logger.LogError($"Erro ao obter cliente de id {id}");
                 throw new Exception($"status code: {response.StatusCode} - {message}");
             }
         }
         catch (System.Exception)
         {
-            _logger.LogError("Erro ao acessar o segmento");
+            _logger.LogError("Erro ao acessar o cliente");
             throw;
         }
     }
 
-    public async Task<IEnumerable<SegmentoDTO>> GetSegmentos()
+    public async Task<IEnumerable<ClienteDTO>> GetClientes()
     {
         try
         {
-            var segmentos = await _httpClient.GetFromJsonAsync<IEnumerable<SegmentoDTO>>("api/Segmentos");
-            return segmentos;
+            var clientes = await _httpClient.GetFromJsonAsync<IEnumerable<ClienteDTO>>("api/Clientes");
+            return clientes;
         }
         catch (System.Exception)
         {
-            _logger.LogError("Erro ao acessar segmentos da api");
+            _logger.LogError("Erro ao acessar clientes da api");
             throw;
         }
     }
 
-    public async Task DeletarSegmento(string id)
+    public async Task UpdateCliente(ClienteDTO obj)
     {
         try
         {
-            var response = await _httpClient.DeleteAsync($"api/Segmentos/{id}");
+            var cliente = JsonSerializer.Serialize(obj);
+            StringContent content = new StringContent(cliente,Encoding.UTF8,"application/json");
+            var response = await _httpClient.PutAsync("api/Clientes",content);
             if(!response.IsSuccessStatusCode)
             {
                 var message = await response.Content.ReadAsStringAsync();
-                _logger.LogError("Erro ao deletar segmento");
+                _logger.LogError("Erro ao atualizar cliente");
                 throw new Exception($"status code:{response.StatusCode} - {message}");
             }
         }

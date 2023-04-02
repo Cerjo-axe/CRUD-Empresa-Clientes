@@ -1,0 +1,32 @@
+@page "/Clientes"
+@inject IClienteService clienteservice;
+<PageTitle>Clientes</PageTitle>
+@if (Clientes == null)
+{
+    <h3>Carregando Clientes ...</h3>
+}
+else
+{
+    <div class="d-flex flex-row">
+    <h1>Clientes</h1>
+    <a class="btn btn-primary" href="/AdicionarCliente"><i class="fa-solid fa-plus"></i> Adicionar</a>
+</div>
+    <div class="row d-flex flex-row">
+        <h5 class="w-25 ">Nome</h5>
+        <h5 class="w-50 ">Descrição</h5>
+        <h5 class="w-25 ">Ações</h5>
+    </div>
+    @if (Clientes.Count() > 0)
+    {
+        <ExibirClientes Clientes="@Clientes"></ExibirClientes>
+    }
+}
+
+@code {
+    public IEnumerable<ClienteDTO>? Clientes { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Clientes = await clienteservice.GetClientes();
+    }
+}
