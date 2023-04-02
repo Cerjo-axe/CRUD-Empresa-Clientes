@@ -3,22 +3,27 @@
 
 <EditForm Model="@cliente" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
-    <label for="Nome">Nome do cliente:</label>
-    <InputText id="Nome" @bind-Value="cliente.Nome" />
-    <ValidationMessage For="@(()=>cliente.Nome)" />
+    <div class="m-3">
+        <label class="row" for="Nome">Nome do cliente:</label>
+        <InputText class="row" id="Nome" @bind-Value="cliente.Nome" />
+        <ValidationMessage For="@(()=>cliente.Nome)" />
+    </div>
+    <div class="m-3">
+        <label class="row" for="site">site do cliente:</label>
+        <InputText class="row" id="site" @bind-Value="cliente.Site" />
+        <ValidationMessage For="@(()=>cliente.Nome)" />
+    </div>
 
-    <label for="site">site do cliente:</label>
-    <InputText id="site" @bind-Value="cliente.Site" />
-    <ValidationMessage For="@(()=>cliente.Nome)" />
-
-    <label for="segmento">segmento do cliente:</label>
-    <InputSelect id="segmento" @bind-Value="cliente.SegmentoId">
-        <option value="">Selecione um segmento...</option>
-        @foreach (var item in Segmentos)
-        {
-            <option value="@item.Id">@item.Nome</option>
-        }
-    </InputSelect>
+    <div class="m-3">
+        <label for="segmento">segmento do cliente:</label>
+        <InputSelect id="segmento" @bind-Value="cliente.SegmentoId">
+            <option value="">Selecione um segmento...</option>
+            @foreach (var item in Segmentos)
+            {
+                <option value="@item.Id">@item.Nome</option>
+            }
+        </InputSelect>
+    </div>
     <ValidationMessage For="@(()=>cliente.Nome)" />
     @if (MensagemErro is not null)
     {

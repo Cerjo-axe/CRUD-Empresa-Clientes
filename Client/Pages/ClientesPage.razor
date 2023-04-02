@@ -7,11 +7,11 @@
 }
 else
 {
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row justify-content-between my-2">
     <h1>Clientes</h1>
     <a class="btn btn-primary" href="/AdicionarCliente"><i class="fa-solid fa-plus"></i> Adicionar</a>
 </div>
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row w-25 h-75 align-middle my-1">
         <select class="form-select" @onchange="@Changeq">
             <option selected value="10">10</option>
             <option value="25">25</option>
@@ -21,8 +21,8 @@ else
     </div>
     <div class="row d-flex flex-row">
         <h5 class="w-25 ">Nome</h5>
-        <h5 class="w-50 ">Descrição</h5>
-        <h5 class="w-25 ">Ações</h5>
+        <h5 class="w-50 ">Site</h5>
+        <h5 class="w-25 text-center pe-1">Ações</h5>
     </div>
     @if (Clientes.Count() > 0)
     {

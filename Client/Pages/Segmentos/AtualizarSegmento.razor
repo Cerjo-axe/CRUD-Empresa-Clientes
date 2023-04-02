@@ -3,10 +3,15 @@
 
 <EditForm Model="@segmento" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
-    <label for="Nome">Nome do Segmento:</label>
-    <InputText id="Nome" @bind-Value="segmento.Nome" />
-    <ValidationMessage For="@(()=>segmento.Nome)" />
-    <InputText id="Descricao" @bind-Value="segmento.Descricao" />
+    <div class="border m-3">
+        <label for="Nome">Nome do Segmento:</label>
+        <InputText id="Nome" @bind-Value="segmento.Nome" />
+        <ValidationMessage For="@(()=>segmento.Nome)" />
+    </div>
+    <div class="border m-3">
+        <label for="Descricao">Descrição:</label>
+        <InputText id="Descricao" @bind-Value="segmento.Descricao" />
+    </div>
     @if (MensagemErro is not null)
     {
         <h3>@MensagemErro</h3>

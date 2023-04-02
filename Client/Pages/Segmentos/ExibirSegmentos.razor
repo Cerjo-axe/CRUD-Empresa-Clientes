@@ -4,7 +4,7 @@
         <li class="list-group-item d-flex flex-row my-1 align-items-end">
             <h5 class="w-25 "> @item.Nome</h5>
             <h5 class="w-50 ">@item.Descricao</h5>
-            <div>
+            <div class="w-25 d-flex flex-row justify-content-evenly">
                 <a href="/Segmento/@item.Id"><i class="fa-regular fa-eye"></i></a>
                 <a href="/AtualizarSegmento/@item.Id"><i class="fa-solid fa-pencil"></i></a>
                 <a href="" @onclick="() => OpenModal(item.Id)"><i class="fa-solid fa-trash"></i></a>
