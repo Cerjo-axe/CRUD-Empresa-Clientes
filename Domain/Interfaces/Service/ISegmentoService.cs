@@ -8,6 +8,6 @@ public interface ISegmentoService
     Task<IEnumerable<SegmentoDTO>> GetSegmentos();
     Task<SegmentoDTO> GetSegmento(string id);
     Task UpdateSegment(SegmentoDTO obj);
-    Task DeleteSegment(SegmentoDTO obj);
+    Task DeleteSegment(string id);
     
 }

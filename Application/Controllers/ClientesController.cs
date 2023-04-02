@@ -97,13 +97,13 @@ public class ClientesController : ControllerBase
         }
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> Deletar([FromBody]ClienteDTO cliente)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Deletar(string id)
     {
         try
         {
-            _logger.LogInformation($"Deletando cliente de id: {cliente.Id}");
-            await _service.DeleteCliente(cliente);
+            _logger.LogInformation($"Deletando cliente de id: {id}");
+            await _service.DeleteCliente(id);
             _logger.LogInformation("Sucesso em deletar o cliente");
             return Ok();
         }

@@ -33,11 +33,11 @@ public class SegmentoService : ISegmentoService
         }
     }
 
-    public async Task DeleteSegment(SegmentoDTO obj)
+    public async Task DeleteSegment(string id)
     {
         try
         {
-            Segmento segmento = await _repository.GetbyId(obj.Id);
+            Segmento segmento = await _repository.GetbyId(id);
             await _repository.Delete(segmento);
         }
         catch (Exception ex)

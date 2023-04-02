@@ -34,11 +34,11 @@ public class ClienteService : IClienteService
         }
     }
 
-    public async Task DeleteCliente(ClienteDTO obj)
+    public async Task DeleteCliente(string id)
     {
         try
         {
-            Cliente cliente = await _repository.GetbyId(obj.Id);
+            Cliente cliente = await _repository.GetbyId(id);
             await _repository.Delete(cliente);
         }
         catch (Exception ex)

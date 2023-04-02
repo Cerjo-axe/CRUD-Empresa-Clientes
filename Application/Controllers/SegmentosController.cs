@@ -19,7 +19,7 @@ public class SegmentosController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<SegmentoDTO>> Obter([FromQuery] string id)
+    public async Task<ActionResult<SegmentoDTO>> Obter(string id)
     {
         try
         {
@@ -96,13 +96,13 @@ public class SegmentosController : ControllerBase
         }
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> Deletar([FromBody]SegmentoDTO segmento)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Deletar(string id)
     {
         try
         {
-            _logger.LogInformation($"Deletando segmento de id: {segmento.Id}");
-            await _service.DeleteSegment(segmento);
+            _logger.LogInformation($"Deletando segmento de id: {id}");
+            await _service.DeleteSegment(id);
             _logger.LogInformation("Sucesso em deletar o segmento");
             return Ok();
         }
