@@ -11,6 +11,14 @@ else
     <h1>Clientes</h1>
     <a class="btn btn-primary" href="/AdicionarCliente"><i class="fa-solid fa-plus"></i> Adicionar</a>
 </div>
+    <div class="d-flex flex-row">
+        <select class="form-select" @onchange="@Changeq">
+            <option selected value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="0">Todos</option>
+        </select>
+    </div>
     <div class="row d-flex flex-row">
         <h5 class="w-25 ">Nome</h5>
         <h5 class="w-50 ">Descrição</h5>
@@ -20,13 +28,73 @@ else
     {
         <ExibirClientes Clientes="@Clientes"></ExibirClientes>
     }
+    <div>
+    @for (int i = 1; i <= totalpags; i++)
+        {
+            int j = i;
+            @if (i == actpag)
+            {
+                <button type="button" class="btn btn-secondary">@i</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-primary" value="@i" @onclick="(() => Changep(j))">@i</button>
+            }
+        }
+    </div>
 }
 
 @code {
     public IEnumerable<ClienteDTO>? Clientes { get; set; }
+    public IEnumerable<ClienteDTO>? Clientessenviados { get; set; }
+
+    public int totalsegs { get; set; }
+    public int qporpag { get; set; } = 10;
+    public int? totalpags { get; set; }
+    public int actpag { get; set; } = 1;
 
     protected override async Task OnInitializedAsync()
     {
         Clientes = await clienteservice.GetClientes();
+        totalsegs = Clientes.Count();
+        Calculatepags();
+        SelecionarEnviados();
+    }
+    private void Changeq(ChangeEventArgs e)
+    {
+        qporpag = int.Parse(e.Value.ToString());
+        if (qporpag == 0)
+        {
+            totalpags = 1;
+        }
+        else
+        {
+            Calculatepags();
+        }
+        actpag = 1;
+        SelecionarEnviados();
+    }
+    private void Changep(int newpag)
+    {
+        actpag = newpag;
+        SelecionarEnviados();
+    }
+    private void Calculatepags()
+    {
+        var temporary = (double)totalsegs / (double)qporpag;
+        totalpags = (int)Math.Ceiling(temporary);
+    }
+    private void SelecionarEnviados()
+    {
+        if (qporpag == 0)
+        {
+            Clientessenviados = Clientes;
+        }
+        else
+        {
+            int inpos = (actpag - 1) * qporpag;
+            Clientessenviados = Clientes.Skip(inpos).Take(qporpag);
+        }
+
     }
 }

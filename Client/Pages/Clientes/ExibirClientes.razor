@@ -3,8 +3,11 @@
     {
         <li class="list-group-item d-flex flex-row my-1 align-items-end">
             <div class="w-25">
-                <h5 class="row "> @item.Nome</h5>
-                <h5 class="row">@item.Site</h5>
+                <h5 class=""> @item.Nome</h5>
+
+            </div>
+            <div>
+                <h5 class="">@item.Site</h5>
             </div>
             <div>
                 <a href="/Cliente/@item.Id"><i class="fa-regular fa-eye"></i></a>
@@ -21,6 +24,7 @@
     [Parameter]
     public IEnumerable<ClienteDTO>? Clientes { get; set; }
 
+    public IEnumerable<SegmentoDTO>? Segmentos { get; set; }
     public string? deleteid { get; set; }
     private ModalDelete modal { get; set; }
 
